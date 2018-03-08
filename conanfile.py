@@ -22,13 +22,13 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure(source_folder="jansson")
-        cmake.build()
+        defs = {}
+        if self.options.shared:
+            defs["-DJANSSON_BUILD_SHARED_LIBS"] = 1
 
-        # Explicit way:
-        # self.run('cmake %s/hello %s' % (self.source_folder, cmake.command_line))
-        # self.run("cmake --build . %s" % cmake.build_config)
+        cmake = CMake(self)
+        cmake.configure(source_folder="jansson", defs=defs)
+        cmake.build()
 
     def package(self):
         self.copy("*.h", dst="include", src="jansson")
