@@ -31,7 +31,8 @@ conan_basic_setup()''')
         cmake.build()
 
     def package(self):
-        self.copy("*.h", dst="include", src="jansson")
+        self.copy("*.h", dst="include", src="jansson/src")
+        self.copy("*.h", dst="include", src="jansson/android")
         self.copy("*jansson.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
